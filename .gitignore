@@ -9,3 +9,19 @@ yarn-error.log*
 .pnp.js
 
 .vscode/*
+
+# Build outputs
+dist/
+
+# OS/editor
+.DS_Store
+.idea/
+*.iml
+
+# Env/Secrets (commit .env.example instead)
+.env
+.env.*
+!.env.example
+
+# Firebase local cache
+.firebase/
