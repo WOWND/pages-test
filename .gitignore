@@ -10,8 +10,6 @@ yarn-error.log*
 
 .vscode/*
 
-# Build outputs
-dist/
 
 # OS/editor
 .DS_Store
