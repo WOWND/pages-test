@@ -1,0 +1,1 @@
+{"version":3,"file":"Field.d.ts","sourceRoot":"","sources":["../../../../src/imp/players/negamax/Field.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,qBAAa,KAAK;IAEhB,SAAgB,GAAG,EAAE,MAAM,CAAC;IAC5B,SAAgB,GAAG,EAAE,MAAM,CAAC;IAIrB,KAAK,EAAE,MAAM,CAAC;IAErB;;OAEG;;IAEH;;OAEG;gBACS,GAAG,EAAE,MAAM,EAAE,GAAG,EAAE,MAAM;CAYrC"}

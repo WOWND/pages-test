@@ -1,0 +1,1 @@
+{"version":3,"file":"Move.d.ts","sourceRoot":"","sources":["../../../src/imp/core/Move.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,qBAAa,IAAI;IACf,SAAgB,GAAG,EAAE,MAAM,CAAC;IAC5B,SAAgB,GAAG,EAAE,MAAM,CAAC;gBAEhB,GAAG,EAAE,MAAM,EAAE,GAAG,EAAE,MAAM;IAKpC,QAAQ,IAAI,MAAM;IAIlB,MAAM,CAAC,GAAG,EAAE,GAAG,GAAG,OAAO;IAOzB,QAAQ,IAAI,MAAM;CAGnB"}

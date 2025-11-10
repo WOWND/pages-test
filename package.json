@@ -1,14 +1,39 @@
 {
-  "name": "gitnfirbasetest",
+  "name": "gomoku-ai-typescript",
   "version": "1.0.0",
-  "private": true,
-  "type": "module",
+  "description": "Gomoku AI implementation using Negamax algorithm with Alpha-Beta pruning",
+  "main": "dist/gomoku-ai-typescript.js",
+  "types": "dist/gomoku-ai-typescript.d.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "npm run build -- --watch & npx serve . -l 5173"
+    "dev": "tsc --watch",
+    "test": "ts-node test-ai.ts --test",
+    "play": "ts-node test-ai.ts --play",
+    "demo": "ts-node test-ai.ts",
+    "clean": "rm -rf dist",
+    "start:web": "npx http-server -o"
   },
+  "keywords": [
+    "gomoku",
+    "ai",
+    "negamax",
+    "alpha-beta",
+    "game",
+    "typescript",
+    "firebase"
+  ],
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
-    "serve": "^14.2.3",
-    "typescript": "^5.6.3"
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0",
+    "http-server": "^14.1.0"
+  },
+  "dependencies": {
+    "@types/readline-sync": "^1.4.4"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }

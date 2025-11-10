@@ -2,9 +2,9 @@
 const root = document.getElementById('root');
 function create(tag, options) {
     const el = document.createElement(tag);
-    if (options === null || options === void 0 ? void 0 : options.className)
+    if (options?.className)
         el.className = options.className;
-    if (options === null || options === void 0 ? void 0 : options.text)
+    if (options?.text)
         el.textContent = options.text;
     return el;
 }
@@ -88,3 +88,4 @@ if (root) {
     const initialState = { count: 0 };
     renderApp(root, initialState);
 }
+//# sourceMappingURL=main.js.map
