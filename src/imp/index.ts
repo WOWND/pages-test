@@ -1,3 +1,7 @@
+import { GameInfo } from './core/GameInfo';
+import { NegamaxPlayer } from './players/negamax/NegamaxPlayer';
+import { GomokuGame } from './Game';
+
 // Main exports
 export { Move } from './core/Move';
 export { GameInfo } from './core/GameInfo';

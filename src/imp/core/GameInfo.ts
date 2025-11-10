@@ -18,7 +18,7 @@ export class GameInfo {
     return this.timeout;
   }
 
-  setTimeout(timeout: number): voida {
+  setTimeout(timeout: number): void {
     this.timeout = timeout;
   }
 }
