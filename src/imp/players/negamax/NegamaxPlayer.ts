@@ -1,9 +1,9 @@
-import { GameInfo } from '../../core/GameInfo';
-import { Move } from '../../core/Move';
-import { State } from './State';
-import { ThreatUtils } from './ThreatUtils';
-import { Evaluator } from './Evaluator';
-import { Cache } from './Cache';
+import { GameInfo } from '../../core/GameInfo.js';
+import { Move } from '../../core/Move.js';
+import { State } from './State.js';
+import { ThreatUtils } from './ThreatUtils.js';
+import { Evaluator } from './Evaluator.js';
+import { Cache } from './Cache.js';
 
 interface MoveEntry {
   move: Move;

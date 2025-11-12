@@ -1,11 +1,12 @@
-import { Move } from './core/Move';
-import { GameInfo } from './core/GameInfo';
-import { NegamaxPlayer } from './players/negamax/NegamaxPlayer';
+import { Move } from './core/Move.js';
+import { GameInfo } from './core/GameInfo.js';
+import { NegamaxPlayer } from './players/negamax/NegamaxPlayer.js';
 /**
  * Main Gomoku Game class
  */
 export class GomokuGame {
-    constructor(boardSize = 15, aiTimeout = 2000) {
+    // 2000ms -> 5000ms로 수정
+    constructor(boardSize = 15, aiTimeout = 5000) {
         this.boardSize = boardSize;
         this.board = this.createEmptyBoard();
         this.currentPlayer = 1;
@@ -20,6 +21,7 @@ export class GomokuGame {
      */
     initAI() {
         this.ai = new NegamaxPlayer(this.gameInfo);
+        console.log("=================");
     }
     /**
      * Create empty board
@@ -70,6 +72,7 @@ export class GomokuGame {
         }
         console.log("AI is computing move...");
         const startTime = performance.now();
+        // AI가 현재 moves 리스트를 기반으로 수를 계산합니다.
         const move = this.ai.getMove(this.moves);
         const elapsed = performance.now() - startTime;
         console.log(`AI computed move in ${elapsed.toFixed(0)}ms`);

@@ -5,7 +5,7 @@ export class GameInfo {
   private size: number;
   private timeout: number; // in milliseconds
 
-  constructor(size: number = 15, timeout: number = 2000) {
+  constructor(size: number = 15, timeout: number = 20000) {
     this.size = size;
     this.timeout = timeout;
   }

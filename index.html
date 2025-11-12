@@ -1,11 +1,428 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <title>TS Pages Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gomoku Game - AI Opponent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .status {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .current-player {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stone-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px solid #333;
+        }
+
+        .stone-indicator.black {
+            background: #000;
+        }
+
+        .stone-indicator.white {
+            background: #fff;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .reset-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .board-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .board {
+            display: inline-grid;
+            gap: 0;
+            background: #daa520;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            grid-template-columns: repeat(15, 30px);
+            grid-template-rows: repeat(15, 30px);
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #8b6914;
+            background: #daa520;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .cell:hover:not(.occupied) {
+            background: #c9941f;
+        }
+
+        .cell.occupied {
+            cursor: not-allowed;
+        }
+
+        .stone {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stone.black {
+            background: radial-gradient(circle at 30% 30%, #444, #000);
+            border: 1px solid #000;
+        }
+
+        .stone.white {
+            background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+            border: 1px solid #999;
+        }
+
+        .message {
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .message.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .message.success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .message.thinking {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .loading {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .winner-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="module" src="./dist/main.js"></script>
+    <div class="container">
+        <h1>오목 (Gomoku)</h1>
+        <p class="subtitle">Five in a Row - Play against AI</p>
+
+        <div class="game-info">
+            <div class="status">
+                <span class="current-player">
+                    Current Player:
+                    <span class="stone-indicator black" id="playerIndicator"></span>
+                    <span id="playerText">Black</span>
+                </span>
+            </div>
+            <div class="controls">
+                <button class="reset-btn" id="resetBtn">New Game</button>
+            </div>
+        </div>
+
+        <div class="board-container">
+            <div class="board" id="board"></div>
+        </div>
+
+        <div id="message" class="message info">
+            Click on the board to place your stone
+        </div>
+    </div>
+
+    <script type="module">
+        import { GomokuGame } from './dist/index.js';
+
+        class GameUI {
+            constructor() {
+                this.game = new GomokuGame(15, 5000);
+                this.game.initAI();
+                this.boardElement = document.getElementById('board');
+                this.messageElement = document.getElementById('message');
+                this.playerIndicator = document.getElementById('playerIndicator');
+                this.playerText = document.getElementById('playerText');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.isAIThinking = false;
+
+                this.initBoard();
+                this.attachEventListeners();
+                this.updateUI();
+            }
+
+            initBoard() {
+                this.boardElement.innerHTML = '';
+                for (let row = 0; row < 15; row++) {
+                    for (let col = 0; col < 15; col++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.dataset.row = row;
+                        cell.dataset.col = col;
+                        cell.addEventListener('click', () => this.handleCellClick(row, col));
+                        this.boardElement.appendChild(cell);
+                    }
+                }
+            }
+
+            attachEventListeners() {
+                this.resetBtn.addEventListener('click', () => this.resetGame());
+            }
+
+            async handleCellClick(row, col) {
+                if (this.game.isGameOver() || this.isAIThinking) {
+                    return;
+                }
+
+                if (this.game.getCurrentPlayer() !== 1) {
+                    this.showMessage('Please wait for AI\'s turn', 'info');
+                    return;
+                }
+
+                const success = this.game.makeMove(row, col);
+                if (!success) {
+                    this.showMessage('Invalid move! Try another position', 'info');
+                    return;
+                }
+
+                this.updateBoard();
+                this.updateUI();
+
+                if (this.game.isGameOver()) {
+                    this.showWinner();
+                    return;
+                }
+
+                // AI's turn
+                await this.makeAIMove();
+            }
+
+            async makeAIMove() {
+                this.isAIThinking = true;
+                this.showMessage('AI is thinking', 'thinking', true);
+                this.resetBtn.disabled = true;
+
+                // Small delay to show the message
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                try {
+                    const success = this.game.makeAIMove();
+
+                    this.updateBoard();
+                    this.updateUI();
+
+                    if (this.game.isGameOver()) {
+                        this.showWinner();
+                    } else {
+                        this.showMessage('Your turn - Click on the board to place your stone', 'info');
+                    }
+                } catch (error) {
+                    console.error('AI error:', error);
+                    this.showMessage('AI error occurred. Please reset the game.', 'info');
+                } finally {
+                    this.isAIThinking = false;
+                    this.resetBtn.disabled = false;
+                }
+            }
+
+            updateBoard() {
+                const board = this.game.getBoard();
+                const cells = this.boardElement.querySelectorAll('.cell');
+
+                cells.forEach((cell, index) => {
+                    const row = Math.floor(index / 15);
+                    const col = index % 15;
+                    const value = board[row][col];
+
+                    cell.innerHTML = '';
+
+                    if (value !== 0) {
+                        const stone = document.createElement('div');
+                        stone.className = `stone ${value === 1 ? 'black' : 'white'}`;
+                        cell.appendChild(stone);
+                        cell.classList.add('occupied');
+                    } else {
+                        cell.classList.remove('occupied');
+                    }
+                });
+            }
+
+            updateUI() {
+                const currentPlayer = this.game.getCurrentPlayer();
+
+                if (currentPlayer === 1) {
+                    this.playerIndicator.className = 'stone-indicator black';
+                    this.playerText.textContent = 'Black (You)';
+                } else {
+                    this.playerIndicator.className = 'stone-indicator white';
+                    this.playerText.textContent = 'White (AI)';
+                }
+            }
+
+            showMessage(text, type = 'info', withLoading = false) {
+                this.messageElement.className = `message ${type}`;
+                this.messageElement.innerHTML = text + (withLoading ? '<span class="loading"></span>' : '');
+            }
+
+            showWinner() {
+                const winner = this.game.getWinner();
+
+                if (winner === 0) {
+                    this.messageElement.className = 'winner-banner';
+                    this.messageElement.textContent = 'Draw! The board is full.';
+                } else if (winner === 1) {
+                    this.messageElement.className = 'winner-banner';
+                    this.messageElement.textContent = 'Congratulations! Black (You) wins!';
+                } else {
+                    this.messageElement.className = 'winner-banner';
+                    this.messageElement.textContent = 'White (AI) wins! Better luck next time.';
+                }
+            }
+
+            resetGame() {
+                if (this.isAIThinking) {
+                    return;
+                }
+
+                this.game.reset();
+                this.updateBoard();
+                this.updateUI();
+                this.showMessage('New game started - Click on the board to place your stone', 'info');
+            }
+        }
+
+        // Initialize the game when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            new GameUI();
+        });
+    </script>
 </body>
 </html>

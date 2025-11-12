@@ -1,1 +1,0 @@
-{"version":3,"file":"GameInfo.d.ts","sourceRoot":"","sources":["../../../src/imp/core/GameInfo.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,qBAAa,QAAQ;IACnB,OAAO,CAAC,IAAI,CAAS;IACrB,OAAO,CAAC,OAAO,CAAS;gBAEZ,IAAI,GAAE,MAAW,EAAE,OAAO,GAAE,MAAa;IAKrD,OAAO,IAAI,MAAM;IAIjB,UAAU,IAAI,MAAM;IAIpB,UAAU,CAAC,OAAO,EAAE,MAAM,GAAG,KAAK;CAGnC"}

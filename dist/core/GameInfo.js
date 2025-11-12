@@ -2,7 +2,7 @@
  * Game information and settings
  */
 export class GameInfo {
-    constructor(size = 15, timeout = 2000) {
+    constructor(size = 15, timeout = 20000) {
         this.size = size;
         this.timeout = timeout;
     }

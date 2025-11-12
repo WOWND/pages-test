@@ -1,4 +1,4 @@
-import { Field } from './Field';
+import { Field } from './Field.js';
 /**
  * Internal game state representation for the AI.
  */

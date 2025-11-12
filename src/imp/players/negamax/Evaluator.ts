@@ -1,5 +1,5 @@
-import { State } from './State';
-import { Field } from './Field';
+import { State } from './State.js';
+import { Field } from './Field.js';
 
 /**
  * Evaluation function for Gomoku board positions

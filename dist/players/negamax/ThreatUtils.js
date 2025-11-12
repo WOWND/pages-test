@@ -1,5 +1,5 @@
-import { Move } from '../../core/Move';
-import { ThreatPattern } from './ThreatPattern';
+import { Move } from '../../core/Move.js';
+import { ThreatPattern } from './ThreatPattern.js';
 /**
  * Used to search for threats in a Gomoku game
  */

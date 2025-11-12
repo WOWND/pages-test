@@ -1,7 +1,7 @@
-import { Move } from '../../core/Move';
-import { State } from './State';
-import { Field } from './Field';
-import { ThreatPattern } from './ThreatPattern';
+import { Move } from '../../core/Move.js';
+import { State } from './State.js';
+import { Field } from './Field.js';
+import { ThreatPattern } from './ThreatPattern.js';
 
 /**
  * Used to search for threats in a Gomoku game

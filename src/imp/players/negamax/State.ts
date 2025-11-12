@@ -1,5 +1,5 @@
-import { Field } from './Field';
-import { Move } from '../../core/Move';
+import { Field } from './Field.js';
+import { Move } from '../../core/Move.js';
 
 /**
  * Internal game state representation for the AI.

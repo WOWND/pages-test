@@ -1,8 +1,8 @@
-import { Move } from '../../core/Move';
-import { State } from './State';
-import { ThreatUtils } from './ThreatUtils';
-import { Evaluator } from './Evaluator';
-import { Cache } from './Cache';
+import { Move } from '../../core/Move.js';
+import { State } from './State.js';
+import { ThreatUtils } from './ThreatUtils.js';
+import { Evaluator } from './Evaluator.js';
+import { Cache } from './Cache.js';
 /**
  * Negamax player with alpha-beta pruning and further optimisations
  */
